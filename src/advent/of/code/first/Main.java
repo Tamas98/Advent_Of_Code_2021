@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         List<Integer> sonarData = readSonarData("src/advent/of/code/first/input.txt");
         System.out.println(countIncreases(sonarData));
+        System.out.println(countIncreasesWhenUsingSum(sonarData));
     }
 
     private static List<Integer> readSonarData(String path)  {
@@ -37,6 +38,21 @@ public class Main {
             if(measurements.get(i) < measurements.get((j))) {
                 counter++;
             }
+        }
+
+        return counter;
+    }
+
+    private static int countIncreasesWhenUsingSum(List<Integer> measurements) {
+        int counter = -1;
+        int prevSum = 0;
+        for(int i = 0, j = 1, k = 2; k < measurements.size(); i++, j++, k++) {
+            int sum = measurements.get(i) + measurements.get(j) + measurements.get(k);
+            if(prevSum < sum) {
+                counter++;
+            }
+
+            prevSum = sum;
         }
 
         return counter;
