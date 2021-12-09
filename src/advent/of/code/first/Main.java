@@ -5,31 +5,19 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import advent.of.code.common.HelperService;
 
 public class Main {
     public static void main(String[] args) {
-        List<Integer> sonarData = readSonarData("src/advent/of/code/first/input.txt");
+        HelperService helperService = new HelperService();
+        List<Integer> sonarData = helperService.readLinesFromFile("src/advent/of/code/first/input.txt")
+                                                .stream()
+                                                .map(Integer::parseInt)
+                                                .collect(Collectors.toList());
         System.out.println(countIncreases(sonarData));
         System.out.println(countIncreasesWhenUsingSum(sonarData));
-    }
-
-    private static List<Integer> readSonarData(String path)  {
-        List<Integer> result = new ArrayList<>();
-        File file = new File(path);
-        Scanner scanner = null;
-
-        try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error while reading file from path: " + path);
-            System.exit(-1);
-        }
-
-        while(scanner.hasNext()) {
-            result.add(Integer.parseInt(scanner.nextLine()));
-        }
-
-        return result;
     }
 
     private static int countIncreases(List<Integer> measurements) {
